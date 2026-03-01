@@ -87,7 +87,7 @@ const AdminPage = () => {
   // Group applications by job_id for the Applications tab
   const appsByJob = jobs.map(job => ({
     ...job,
-    applicants: applications.filter(a => a.job_id === job.id),
+    applicants: applications.filter(a => Number(a.job_id) === Number(job.id)),
   })).filter(job => job.applicants.length > 0);
 
   return (
