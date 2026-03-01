@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Filter, ChevronLeft, ChevronRight } from 'lucide-react';
+import {  ChevronLeft, ChevronRight } from 'lucide-react';
 import SearchBar from '../components/SearchBar';
 import JobCard from '../components/JobCard';
 import { getJobs } from '../utils/api';
@@ -14,7 +14,6 @@ const JobsPage = () => {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [showFilters, setShowFilters] = useState(false);
 
   const search = searchParams.get('search') || '';
   const location = searchParams.get('location') || '';
