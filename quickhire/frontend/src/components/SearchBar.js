@@ -1,9 +1,12 @@
-import  { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, MapPin } from 'lucide-react';
 
 const SearchBar = ({ onSearch, initialSearch = '', initialLocation = '' }) => {
   const [search, setSearch] = useState(initialSearch);
   const [location, setLocation] = useState(initialLocation);
+
+  useEffect(() => { setSearch(initialSearch); }, [initialSearch]);
+  useEffect(() => { setLocation(initialLocation); }, [initialLocation]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,6 +16,7 @@ const SearchBar = ({ onSearch, initialSearch = '', initialLocation = '' }) => {
   return (
     <form onSubmit={handleSubmit} style={{
       background: 'white',
+      borderRadius: 12,
       padding: '8px 8px 8px 16px',
       display: 'flex',
       alignItems: 'center',
@@ -29,12 +33,8 @@ const SearchBar = ({ onSearch, initialSearch = '', initialLocation = '' }) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={{
-            border: 'none',
-            outline: 'none',
-            fontSize: 15,
-            color: '#1A1A2E',
-            background: 'transparent',
-            width: '100%',
+            border: 'none', outline: 'none', fontSize: 15,
+            color: '#1A1A2E', background: 'transparent', width: '100%',
           }}
         />
       </div>
@@ -51,12 +51,8 @@ const SearchBar = ({ onSearch, initialSearch = '', initialLocation = '' }) => {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           style={{
-            border: 'none',
-            outline: 'none',
-            fontSize: 15,
-            color: '#1A1A2E',
-            background: 'transparent',
-            width: '100%',
+            border: 'none', outline: 'none', fontSize: 15,
+            color: '#1A1A2E', background: 'transparent', width: '100%',
           }}
         />
       </div>
