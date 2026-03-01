@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Filter, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import SearchBar from '../components/SearchBar';
 import JobCard from '../components/JobCard';
 import { getJobs } from '../utils/api';

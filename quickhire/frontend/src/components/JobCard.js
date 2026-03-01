@@ -1,6 +1,5 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Clock } from 'lucide-react';
+import { MapPin} from 'lucide-react';
 
 const LOGO_COLORS = [
   '#2B4EFF', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4',

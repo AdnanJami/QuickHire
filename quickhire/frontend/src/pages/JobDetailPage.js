@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, Clock, DollarSign, ArrowLeft, CheckCircle, XCircle, Loader } from 'lucide-react';
+import { MapPin, DollarSign, ArrowLeft, CheckCircle, XCircle, Loader } from 'lucide-react';
 import { getJob, submitApplication } from '../utils/api';
 
 const LOGO_COLORS = ['#2B4EFF', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#F7A399'];

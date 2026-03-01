@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Search, MapPin } from 'lucide-react';
 
 const SearchBar = ({ onSearch, initialSearch = '', initialLocation = '' }) => {

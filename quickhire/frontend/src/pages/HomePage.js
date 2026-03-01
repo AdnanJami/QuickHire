@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Briefcase, TrendingUp, Users, DollarSign, Monitor, Settings, BarChart2, ChevronRight } from 'lucide-react';
+import { ArrowRight, BarChart2,} from 'lucide-react';
 import SearchBar from '../components/SearchBar';
 import JobCard from '../components/JobCard';
 import { getJobs } from '../utils/api';
