@@ -5,7 +5,7 @@
 }
 
 :root {
-  --primary: #2B4EFF;
+  --primary: #4640DE;
   --primary-dark: #1a3ae6;
   --primary-light: #EEF1FF;
   --secondary: #25D366;
@@ -78,7 +78,6 @@ a {
   background-color: var(--primary);
   color: white;
   border: none;
-  border-radius: 8px;
   padding: 12px 24px;
   font-family: var(--font-body);
   font-size: 15px;

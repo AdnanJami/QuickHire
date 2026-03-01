@@ -13,7 +13,7 @@ const Footer = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
               <div style={{
-                width: 32, height: 32, borderRadius: 8,
+                width: 32, height: 32,
                 background: 'linear-gradient(135deg, #2B4EFF, #6B8AFF)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
@@ -70,7 +70,6 @@ const Footer = () => {
                   flex: 1,
                   background: '#2D2D4A',
                   border: '1px solid #374151',
-                  borderRadius: 8,
                   padding: '10px 14px',
                   fontSize: 14,
                   color: 'white',

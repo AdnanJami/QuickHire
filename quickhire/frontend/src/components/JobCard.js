@@ -27,7 +27,7 @@ const getTagClass = (tag) => {
 
 const JobCard = ({ job, style = {} }) => {
   return (
-    <Link to={`/jobs/${job._id}`} style={{ textDecoration: 'none', display: 'block' }}>
+    <Link to={`/jobs/${job.id}`} style={{ textDecoration: 'none', display: 'block' }}>
       <div className="card" style={{ padding: 20, ...style }}>
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 12 }}>
@@ -49,7 +49,6 @@ const JobCard = ({ job, style = {} }) => {
             background: '#F0F9FF',
             color: '#0369A1',
             padding: '3px 10px',
-            borderRadius: 20,
             fontSize: 12,
             fontWeight: 600,
             whiteSpace: 'nowrap',

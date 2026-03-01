@@ -62,7 +62,6 @@ const JobDetailPage = () => {
   const inputStyle = (fieldName) => ({
     width: '100%',
     padding: '12px 16px',
-    borderRadius: 10,
     border: `1.5px solid ${formErrors[fieldName] ? '#EF4444' : '#E5E7EB'}`,
     fontSize: 15,
     fontFamily: 'DM Sans',
@@ -104,11 +103,11 @@ const JobDetailPage = () => {
         {/* Left: Job Details */}
         <div>
           {/* Header card */}
-          <div style={{ background: 'white', borderRadius: 20, border: '1.5px solid #F3F4F6', padding: 32, marginBottom: 24 }}>
+          <div style={{ background: 'white', border: '1.5px solid #F3F4F6', padding: 32, marginBottom: 24 }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20, marginBottom: 24 }}>
               <div
                 className="logo-circle"
-                style={{ width: 64, height: 64, fontSize: 26, borderRadius: 16, background: getLogoColor(job.company) }}
+                style={{ width: 64, height: 64, fontSize: 26, background: getLogoColor(job.company) }}
               >
                 {(job.logo || job.company?.charAt(0) || 'J').toUpperCase()}
               </div>
@@ -123,13 +122,13 @@ const JobDetailPage = () => {
                   </span>
                   <span style={{
                     background: '#EEF1FF', color: '#2B4EFF',
-                    padding: '4px 12px', borderRadius: 20, fontSize: 13, fontWeight: 600,
+                    padding: '4px 12px', fontSize: 13, fontWeight: 600,
                   }}>
                     {job.type}
                   </span>
                   <span style={{
                     background: '#F0FFF4', color: '#16A34A',
-                    padding: '4px 12px', borderRadius: 20, fontSize: 13, fontWeight: 600,
+                    padding: '4px 12px', fontSize: 13, fontWeight: 600,
                   }}>
                     {job.category}
                   </span>
@@ -141,7 +140,7 @@ const JobDetailPage = () => {
               <div style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 background: '#FFF3E0', color: '#E65100',
-                padding: '8px 16px', borderRadius: 10, fontSize: 14, fontWeight: 600,
+                padding: '8px 16px',fontSize: 14, fontWeight: 600,
               }}>
                 <DollarSign size={16} />
                 {job.salary}
@@ -150,7 +149,7 @@ const JobDetailPage = () => {
           </div>
 
           {/* Description */}
-          <div style={{ background: 'white', borderRadius: 20, border: '1.5px solid #F3F4F6', padding: 32 }}>
+          <div style={{ background: 'white', border: '1.5px solid #F3F4F6', padding: 32 }}>
             <h2 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 20, color: '#1A1A2E', marginBottom: 20 }}>
               Job Description
             </h2>
@@ -165,7 +164,7 @@ const JobDetailPage = () => {
                   {job.tags.map((tag, i) => (
                     <span key={i} style={{
                       background: '#EEF1FF', color: '#2B4EFF',
-                      padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 600,
+                      padding: '6px 14px', fontSize: 13, fontWeight: 600,
                     }}>
                       {tag}
                     </span>
@@ -178,7 +177,7 @@ const JobDetailPage = () => {
 
         {/* Right: Apply Form */}
         <div>
-          <div style={{ background: 'white', borderRadius: 20, border: '1.5px solid #F3F4F6', padding: 32, position: 'sticky', top: 90 }}>
+          <div style={{ background: 'white', border: '1.5px solid #F3F4F6', padding: 32, position: 'sticky', top: 90 }}>
             <h2 style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 22, color: '#1A1A2E', marginBottom: 8 }}>
               Apply Now
             </h2>
@@ -190,7 +189,6 @@ const JobDetailPage = () => {
               <div style={{
                 background: '#F0FFF4',
                 border: '1.5px solid #86EFAC',
-                borderRadius: 12,
                 padding: 24,
                 textAlign: 'center',
               }}>
@@ -213,7 +211,7 @@ const JobDetailPage = () => {
               <form onSubmit={handleSubmit}>
                 {submitError && (
                   <div style={{
-                    background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 10,
+                    background: '#FEF2F2', border: '1px solid #FECACA',
                     padding: '12px 16px', marginBottom: 16, display: 'flex', gap: 8, alignItems: 'center',
                   }}>
                     <XCircle size={16} color="#EF4444" />

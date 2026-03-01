@@ -30,7 +30,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
-              width: 36, height: 36, borderRadius: 10,
+              width: 36, height: 36,
               background: 'linear-gradient(135deg, #2B4EFF, #6B8AFF)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
@@ -73,7 +73,6 @@ const Navbar = () => {
               <button style={{
                 background: 'transparent',
                 border: '1.5px solid #E5E7EB',
-                borderRadius: 8,
                 padding: '9px 20px',
                 fontSize: 14,
                 fontWeight: 600,

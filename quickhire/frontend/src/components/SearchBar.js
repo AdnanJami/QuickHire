@@ -13,7 +13,6 @@ const SearchBar = ({ onSearch, initialSearch = '', initialLocation = '' }) => {
   return (
     <form onSubmit={handleSubmit} style={{
       background: 'white',
-      borderRadius: 12,
       padding: '8px 8px 8px 16px',
       display: 'flex',
       alignItems: 'center',

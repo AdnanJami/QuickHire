@@ -81,7 +81,7 @@ const JobsPage = () => {
         {/* Sidebar Filters */}
         <aside>
           {/* Category Filter */}
-          <div style={{ background: 'white', borderRadius: 16, border: '1.5px solid #F3F4F6', padding: 24, marginBottom: 20 }}>
+          <div style={{ background: 'white', border: '1.5px solid #F3F4F6', padding: 24, marginBottom: 20 }}>
             <h3 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 16, color: '#1A1A2E', marginBottom: 16 }}>Category</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {CATEGORIES.map(cat => (
@@ -93,7 +93,6 @@ const JobsPage = () => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: '8px 12px',
-                    borderRadius: 8,
                     border: 'none',
                     background: category === cat ? '#EEF1FF' : 'transparent',
                     color: category === cat ? '#2B4EFF' : '#374151',
@@ -114,7 +113,7 @@ const JobsPage = () => {
           </div>
 
           {/* Job Type Filter */}
-          <div style={{ background: 'white', borderRadius: 16, border: '1.5px solid #F3F4F6', padding: 24 }}>
+          <div style={{ background: 'white', border: '1.5px solid #F3F4F6', padding: 24 }}>
             <h3 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 16, color: '#1A1A2E', marginBottom: 16 }}>Job Type</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {JOB_TYPES.map(t => (
@@ -126,7 +125,6 @@ const JobsPage = () => {
                     alignItems: 'center',
                     gap: 10,
                     padding: '8px 12px',
-                    borderRadius: 8,
                     border: 'none',
                     background: type === t ? '#EEF1FF' : 'transparent',
                     color: type === t ? '#2B4EFF' : '#374151',
@@ -140,7 +138,7 @@ const JobsPage = () => {
                   }}
                 >
                   <div style={{
-                    width: 16, height: 16, borderRadius: 4,
+                    width: 16, height: 16,
                     border: `2px solid ${type === t ? '#2B4EFF' : '#D1D5DB'}`,
                     background: type === t ? '#2B4EFF' : 'transparent',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -167,7 +165,6 @@ const JobsPage = () => {
                     padding: '6px 14px',
                     background: '#EEF1FF',
                     border: 'none',
-                    borderRadius: 20,
                     color: '#2B4EFF',
                     fontWeight: 600,
                     fontSize: 13,
@@ -185,7 +182,6 @@ const JobsPage = () => {
                     padding: '6px 14px',
                     background: '#EEF1FF',
                     border: 'none',
-                    borderRadius: 20,
                     color: '#2B4EFF',
                     fontWeight: 600,
                     fontSize: 13,
@@ -202,7 +198,7 @@ const JobsPage = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
               {[...Array(6)].map((_, i) => (
                 <div key={i} style={{
-                  height: 200, background: '#F3F4F6', borderRadius: 16,
+                  height: 200, background: '#F3F4F6',
                   animation: 'pulse 1.5s ease infinite',
                 }} />
               ))}
@@ -217,7 +213,7 @@ const JobsPage = () => {
             <>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginBottom: 32 }}>
                 {jobs.map(job => (
-                  <JobCard key={job._id} job={job} />
+                  <JobCard key={job.id} job={job} />
                 ))}
               </div>
 
@@ -228,7 +224,7 @@ const JobsPage = () => {
                     onClick={() => setPage(p => Math.max(1, p - 1))}
                     disabled={page === 1}
                     style={{
-                      width: 36, height: 36, borderRadius: 8,
+                      width: 36, height: 36,
                       border: '1.5px solid #E5E7EB',
                       background: 'white',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -243,7 +239,7 @@ const JobsPage = () => {
                       key={i}
                       onClick={() => setPage(i + 1)}
                       style={{
-                        width: 36, height: 36, borderRadius: 8,
+                        width: 36, height: 36,
                         border: page === i + 1 ? 'none' : '1.5px solid #E5E7EB',
                         background: page === i + 1 ? '#2B4EFF' : 'white',
                         color: page === i + 1 ? 'white' : '#374151',
@@ -260,7 +256,7 @@ const JobsPage = () => {
                     onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                     disabled={page === totalPages}
                     style={{
-                      width: 36, height: 36, borderRadius: 8,
+                      width: 36, height: 36,
                       border: '1.5px solid #E5E7EB',
                       background: 'white',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',

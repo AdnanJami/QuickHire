@@ -4,16 +4,22 @@ import { ArrowRight, Briefcase, TrendingUp, Users, DollarSign, Monitor, Settings
 import SearchBar from '../components/SearchBar';
 import JobCard from '../components/JobCard';
 import { getJobs } from '../utils/api';
-
+import person_image from '../static/image.png';
+import { LiaPencilRulerSolid,LiaCodeSolid } from "react-icons/lia";
+import { TbChartInfographic,TbDeviceImac } from "react-icons/tb";
+import { GrAnnounce } from "react-icons/gr";
+import { HiCash } from "react-icons/hi";
+import { LuBriefcaseBusiness } from "react-icons/lu";
+import { FaUsers } from "react-icons/fa";
 const CATEGORIES = [
-  { name: 'Design', count: '235 jobs available', icon: '🎨', color: '#EEF1FF' },
-  { name: 'Sales', count: '756 jobs available', icon: '📈', color: '#FFF3E0' },
-  { name: 'Marketing', count: '140 jobs available', icon: '📢', color: '#2B4EFF', textColor: 'white', active: true },
-  { name: 'Finance', count: '325 jobs available', icon: '💰', color: '#F0FFF4' },
-  { name: 'Technology', count: '416 jobs available', icon: '💻', color: '#FFF0F6' },
-  { name: 'Engineering', count: '542 jobs available', icon: '</>', color: '#FFFDE7' },
-  { name: 'Business', count: '211 jobs available', icon: '💼', color: '#F0F9FF' },
-  { name: 'Human Resources', count: '346 jobs available', icon: '👥', color: '#F5F0FF' },
+  { name: 'Design',          count: '235 jobs available', icon: <LiaPencilRulerSolid color="#4640DE" size={28} /> },
+  { name: 'Sales',           count: '756 jobs available', icon: <TbChartInfographic  color="#4640DE" size={28} /> },
+  { name: 'Marketing',       count: '140 jobs available', icon: <GrAnnounce color="#4640DE" size={28} /> },
+  { name: 'Finance',         count: '325 jobs available', icon: <HiCash color="#4640DE" size={28} /> },
+  { name: 'Technology',      count: '416 jobs available', icon: <TbDeviceImac color="#4640DE" size={28} /> },
+  { name: 'Engineering',     count: '542 jobs available', icon: <LiaCodeSolid color="#4640DE" size={28} /> },
+  { name: 'Business',        count: '211 jobs available', icon: <LuBriefcaseBusiness color="#4640DE" size={28} /> },
+  { name: 'Human Resources', count: '346 jobs available', icon: <FaUsers color="#4640DE" size={28} /> },
 ];
 
 const COMPANIES = ['vodafone', 'intel', 'TESLA', 'AMD', 'Talkit'];
@@ -54,20 +60,19 @@ const HomePage = () => {
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(135deg, #F8F9FF 0%, #EEF1FF 100%)',
-        paddingTop: 120,
-        paddingBottom: 80,
+        paddingTop: 100,
         position: 'relative',
         overflow: 'hidden',
       }}>
         {/* Decorative shapes */}
         <div style={{
           position: 'absolute', top: -60, right: -60,
-          width: 300, height: 300, borderRadius: '50%',
+          width: 300, height: 300,
           background: 'radial-gradient(circle, rgba(43,78,255,0.06) 0%, transparent 70%)',
         }} />
         <div style={{
           position: 'absolute', bottom: -80, left: -80,
-          width: 400, height: 400, borderRadius: '50%',
+          width: 400, height: 400,
           background: 'radial-gradient(circle, rgba(43,78,255,0.04) 0%, transparent 70%)',
         }} />
 
@@ -118,69 +123,14 @@ const HomePage = () => {
 
             {/* Hero image area */}
             <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }} className="hero-img-col">
-              <div style={{
-                width: 380,
-                height: 420,
-                background: 'linear-gradient(145deg, #2B4EFF 0%, #6B8AFF 100%)',
-                borderRadius: '40% 60% 60% 40% / 40% 40% 60% 60%',
-                position: 'relative',
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'center',
-              }}>
-                {/* Stats cards */}
-                <div style={{
-                  position: 'absolute', top: 30, left: -20,
-                  background: 'white',
-                  borderRadius: 12,
-                  padding: '12px 16px',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 10,
-                }}>
-                  <div style={{ width: 36, height: 36, background: '#EEF1FF', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Briefcase size={18} color="#2B4EFF" />
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 16 }}>21,457</div>
-                    <div style={{ fontSize: 12, color: '#6B7280' }}>Jobs Posted</div>
-                  </div>
-                </div>
-                <div style={{
-                  position: 'absolute', bottom: 40, right: -20,
-                  background: 'white',
-                  borderRadius: 12,
-                  padding: '12px 16px',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 10,
-                }}>
-                  <div style={{ width: 36, height: 36, background: '#F0FFF4', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Users size={18} color="#16A34A" />
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 16 }}>158</div>
-                    <div style={{ fontSize: 12, color: '#6B7280' }}>Companies</div>
-                  </div>
-                </div>
-                {/* Abstract person */}
-                <div style={{
-                  width: 200, height: 320,
-                  background: 'rgba(255,255,255,0.15)',
-                  borderRadius: '100px 100px 0 0',
-                  marginBottom: 0,
-                }} />
-              </div>
+              <img src={person_image} alt="person" />
             </div>
           </div>
         </div>
       </section>
 
       {/* Companies */}
-      <section style={{ padding: '40px 0', borderBottom: '1px solid #F3F4F6' }}>
+      <section style={{ padding: '20px 0', borderBottom: '1px solid #F3F4F6' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
           <p style={{ textAlign: 'center', color: '#9CA3AF', fontSize: 13, marginBottom: 28, fontWeight: 500 }}>
             Companies we helped grow
@@ -190,7 +140,7 @@ const HomePage = () => {
               <span key={c} style={{
                 fontFamily: 'Syne',
                 fontWeight: 700,
-                fontSize: 20,
+                fontSize: 40,
                 color: '#C4C4C4',
                 letterSpacing: c === 'TESLA' ? 3 : 0,
                 transition: 'color 0.2s',
@@ -226,8 +176,7 @@ const HomePage = () => {
                 style={{ textDecoration: 'none' }}
               >
                 <div style={{
-                  background: cat.active ? '#2B4EFF' : cat.color,
-                  borderRadius: 16,
+                  background: cat.active ? '#2B4EFF' : '#ffffff11',
                   padding: '24px 20px',
                   cursor: 'pointer',
                   transition: 'all 0.25s ease',
@@ -278,8 +227,7 @@ const HomePage = () => {
       <section style={{ padding: '0 0 80px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
           <div style={{
-            background: 'linear-gradient(135deg, #2B4EFF 0%, #4B6AFF 100%)',
-            borderRadius: 24,
+            background: '#4640DE',
             padding: '60px',
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
@@ -290,7 +238,7 @@ const HomePage = () => {
           }}>
             <div style={{
               position: 'absolute', right: -40, top: -40,
-              width: 300, height: 300, borderRadius: '50%',
+              width: 300, height: 300,
               background: 'rgba(255,255,255,0.06)',
             }} />
             <div>
@@ -305,7 +253,6 @@ const HomePage = () => {
                   background: 'white',
                   color: '#2B4EFF',
                   border: 'none',
-                  borderRadius: 8,
                   padding: '12px 28px',
                   fontFamily: 'DM Sans',
                   fontWeight: 700,
@@ -323,19 +270,17 @@ const HomePage = () => {
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <div style={{
                 background: 'rgba(255,255,255,0.12)',
-                borderRadius: 16,
                 padding: 24,
                 backdropFilter: 'blur(10px)',
                 border: '1px solid rgba(255,255,255,0.2)',
                 width: '100%',
                 maxWidth: 300,
               }}>
-                <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
+                <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
                   {['76', '24', '12', '67'].map((n, i) => (
                     <div key={i} style={{
                       background: 'rgba(255,255,255,0.15)',
-                      borderRadius: 8,
-                      padding: '8px 12px',
+                      padding: '8px 8px',
                       flex: 1,
                       textAlign: 'center',
                     }}>
@@ -343,15 +288,15 @@ const HomePage = () => {
                     </div>
                   ))}
                 </div>
-                <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ background: 'rgba(255,255,255,0.1)', height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <BarChart2 size={40} color="rgba(255,255,255,0.5)" />
                 </div>
                 <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
-                  <div style={{ flex: 1, background: 'rgba(255,255,255,0.1)', borderRadius: 6, padding: '6px 10px' }}>
+                  <div style={{ flex: 1, background: 'rgba(255,255,255,0.1)', padding: '6px 10px' }}>
                     <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)' }}>Applications</div>
                     <div style={{ fontFamily: 'Syne', fontWeight: 700, color: 'white', fontSize: 14 }}>2,342</div>
                   </div>
-                  <div style={{ flex: 1, background: 'rgba(255,255,255,0.1)', borderRadius: 6, padding: '6px 10px' }}>
+                  <div style={{ flex: 1, background: 'rgba(255,255,255,0.1)', padding: '6px 10px' }}>
                     <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)' }}>Jobs</div>
                     <div style={{ fontFamily: 'Syne', fontWeight: 700, color: 'white', fontSize: 14 }}>454</div>
                   </div>
@@ -375,7 +320,7 @@ const HomePage = () => {
           {loading ? (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
               {[...Array(4)].map((_, i) => (
-                <div key={i} style={{ height: 180, background: '#F3F4F6', borderRadius: 16, animation: 'pulse 1.5s infinite' }} />
+                <div key={i} style={{ height: 180, background: '#F3F4F6', animation: 'pulse 1.5s infinite' }} />
               ))}
             </div>
           ) : (
@@ -401,7 +346,7 @@ const HomePage = () => {
           {loading ? (
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
               {[...Array(4)].map((_, i) => (
-                <div key={i} style={{ height: 140, background: '#F3F4F6', borderRadius: 16 }} />
+                <div key={i} style={{ height: 140, background: '#F3F4F6'}} />
               ))}
             </div>
           ) : (
