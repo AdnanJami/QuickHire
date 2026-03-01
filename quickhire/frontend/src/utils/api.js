@@ -18,3 +18,4 @@ export const submitApplication = (data) => api.post('/applications', data);
 export const getApplications = () => api.get('/applications');
 
 export default api;
+export const getApplicationsByJob = (jobId) => api.get('/applications', { params: { job_id: jobId } });

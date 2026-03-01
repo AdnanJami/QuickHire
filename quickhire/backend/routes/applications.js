@@ -37,16 +37,22 @@ router.post(
 router.get('/', async (req, res) => {
   const pool = getPool(req);
   try {
-    const { rows } = await pool.query(
-      `SELECT a.*, j.title AS job_title, j.company AS job_company
-       FROM applications a
-       LEFT JOIN jobs j ON a.job_id = j.id
-       ORDER BY a.created_at DESC`
-    );
+    const { job_id } = req.query;
+    let query = `
+      SELECT a.*, j.title AS job_title, j.company AS job_company
+      FROM applications a
+      LEFT JOIN jobs j ON a.job_id = j.id
+    `;
+    const params = [];
+    if (job_id) {
+      query += ` WHERE a.job_id = $1`;
+      params.push(job_id);
+    }
+    query += ` ORDER BY a.created_at DESC`;
+    const { rows } = await pool.query(query, params);
     res.json({ success: true, data: rows });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
-
 module.exports = router;
