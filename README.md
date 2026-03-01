@@ -9,7 +9,7 @@ A full-stack job board built with **React.js**, **Node.js/Express**, and **Postg
 **Prerequisites:** [Docker Desktop](https://docs.docker.com/get-docker/)
 
 ```bash
-git clone https://github.com/your-username/quickhire.git
+git clone https://github.com/AdnanJami/QuickHire.git
 cd quickhire
 
 cp .env.example .env      # uses defaults — works out of the box
