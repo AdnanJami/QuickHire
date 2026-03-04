@@ -26,7 +26,7 @@ const AdminPage = () => {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const [deletingId, setDeletingId] = useState(null);
-  const [expandedJob, setExpandedJob] = useState(null); // for Applications tab
+  const [expandedJob, setExpandedJob] = useState(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -84,7 +84,6 @@ const AdminPage = () => {
   };
   const labelStyle = { display: 'block', fontWeight: 600, fontSize: 13, color: '#374151', marginBottom: 6 };
 
-  // Group applications by job_id for the Applications tab
   const appsByJob = jobs.map(job => ({
     ...job,
     applicants: applications.filter(a => Number(a.job_id) === Number(job.id)),
@@ -105,8 +104,8 @@ const AdminPage = () => {
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '32px 24px' }}>
 
-        {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginBottom: 32 }}>
+        {/* Stats — uses CSS class for responsive grid */}
+        <div className="admin-stats-grid">
           {[
             { label: 'Total Jobs', value: jobs.length, icon: Briefcase, color: '#EEF1FF', iconColor: '#2B4EFF' },
             { label: 'Applications', value: applications.length, icon: Users, color: '#F0FFF4', iconColor: '#16A34A' },
@@ -154,7 +153,7 @@ const AdminPage = () => {
           ))}
         </div>
 
-        {/* ── JOBS TAB ──────────────────────────────────────────── */}
+        {/* JOBS TAB */}
         {activeTab === 'jobs' && (
           <div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 20 }}>
@@ -164,12 +163,12 @@ const AdminPage = () => {
               </button>
             </div>
 
-            {/* New Job Form */}
             {showForm && (
               <div style={{ background: 'white', borderRadius: 20, border: '1.5px solid #EEF1FF', padding: 32, marginBottom: 24 }}>
                 <h2 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 20, marginBottom: 24 }}>Post a New Job</h2>
                 <form onSubmit={handleSubmit}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+                  {/* ✅ CSS class for responsive 2-col form grid */}
+                  <div className="admin-form-grid">
                     {[
                       { label: 'Job Title *', key: 'title', placeholder: 'e.g. Senior Designer', required: true },
                       { label: 'Company *', key: 'company', placeholder: 'e.g. Acme Corp', required: true },
@@ -227,7 +226,7 @@ const AdminPage = () => {
                       Feature this job listing
                     </label>
                   </div>
-                  <div style={{ display: 'flex', gap: 12 }}>
+                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                     <button type="submit" className="btn-primary" disabled={submitting}>
                       {submitting ? <><Loader size={14} style={{ animation: 'spin 1s linear infinite' }} /> Posting...</> : 'Post Job'}
                     </button>
@@ -239,7 +238,6 @@ const AdminPage = () => {
               </div>
             )}
 
-            {/* Jobs List */}
             {loading ? (
               <div style={{ textAlign: 'center', padding: 40 }}>
                 <Loader size={28} color="#2B4EFF" style={{ animation: 'spin 1s linear infinite' }} />
@@ -247,54 +245,53 @@ const AdminPage = () => {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {jobs.map(job => (
-                  <div key={job.id} style={{
-                    background: 'white', borderRadius: 16, border: '1.5px solid #F3F4F6',
-                    padding: '20px 24px', display: 'flex', alignItems: 'center', gap: 16,
-                  }}>
-                    <div className="logo-circle" style={{ background: getLogoColor(job.company), flexShrink: 0 }}>
-                      {(job.logo || job.company?.charAt(0) || 'J').toUpperCase()}
-                    </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                        <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 15, color: '#1A1A2E' }}>{job.title}</span>
-                        {job.featured && (
-                          <span style={{ background: '#FFF3E0', color: '#D97706', padding: '2px 8px', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>
-                            Featured
-                          </span>
-                        )}
+                  <div key={job.id} style={{ background: 'white', borderRadius: 16, border: '1.5px solid #F3F4F6', padding: '20px 24px' }}>
+                    {/* Top row: logo + title + actions */}
+                    <div className="admin-job-row">
+                      <div className="logo-circle" style={{ background: getLogoColor(job.company), flexShrink: 0 }}>
+                        {(job.logo || job.company?.charAt(0) || 'J').toUpperCase()}
                       </div>
-                      <div style={{ fontSize: 13, color: '#6B7280' }}>{job.company} · {job.location} · {job.type}</div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ background: '#EEF1FF', color: '#2B4EFF', padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 600 }}>
-                        {job.category}
-                      </span>
-                      <Link to={`/admin/jobs/${job.id}`}>
-                        <button style={{
-                          display: 'flex', alignItems: 'center', gap: 6,
-                          background: '#EEF1FF', border: 'none', borderRadius: 8,
-                          padding: '7px 12px', color: '#2B4EFF',
-                          fontFamily: 'DM Sans', fontWeight: 600, fontSize: 13, cursor: 'pointer',
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4, flexWrap: 'wrap' }}>
+                          <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 15, color: '#1A1A2E' }}>{job.title}</span>
+                          {job.featured && (
+                            <span style={{ background: '#FFF3E0', color: '#D97706', padding: '2px 8px', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>Featured</span>
+                          )}
+                        </div>
+                        <div style={{ fontSize: 13, color: '#6B7280' }}>{job.company} · {job.location} · {job.type}</div>
+                      </div>
+                      {/* Actions */}
+                      <div className="admin-job-actions">
+                        <span style={{ background: '#EEF1FF', color: '#2B4EFF', padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 600 }}>
+                          {job.category}
+                        </span>
+                        <Link to={`/admin/jobs/${job.id}`}>
+                          <button style={{
+                            display: 'flex', alignItems: 'center', gap: 6,
+                            background: '#EEF1FF', border: 'none', borderRadius: 8,
+                            padding: '7px 12px', color: '#2B4EFF',
+                            fontFamily: 'DM Sans', fontWeight: 600, fontSize: 13, cursor: 'pointer',
+                          }}
+                            onMouseEnter={e => e.currentTarget.style.background = '#DDE4FF'}
+                            onMouseLeave={e => e.currentTarget.style.background = '#EEF1FF'}
+                          >
+                            <Eye size={13} /> Details
+                          </button>
+                        </Link>
+                        <button onClick={() => handleDelete(job.id)} disabled={deletingId === job.id} style={{
+                          width: 36, height: 36, background: '#FEF2F2', border: 'none', borderRadius: 8,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          cursor: deletingId === job.id ? 'not-allowed' : 'pointer', transition: 'all 0.2s',
                         }}
-                          onMouseEnter={e => e.currentTarget.style.background = '#DDE4FF'}
-                          onMouseLeave={e => e.currentTarget.style.background = '#EEF1FF'}
+                          onMouseEnter={e => { if (deletingId !== job.id) e.currentTarget.style.background = '#FEE2E2'; }}
+                          onMouseLeave={e => e.currentTarget.style.background = '#FEF2F2'}
                         >
-                          <Eye size={13} /> View Applicants
+                          {deletingId === job.id
+                            ? <Loader size={14} color="#EF4444" style={{ animation: 'spin 1s linear infinite' }} />
+                            : <Trash2 size={14} color="#EF4444" />
+                          }
                         </button>
-                      </Link>
-                      <button onClick={() => handleDelete(job.id)} disabled={deletingId === job.id} style={{
-                        width: 36, height: 36, background: '#FEF2F2', border: 'none', borderRadius: 8,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        cursor: deletingId === job.id ? 'not-allowed' : 'pointer', transition: 'all 0.2s',
-                      }}
-                        onMouseEnter={e => { if (deletingId !== job.id) e.currentTarget.style.background = '#FEE2E2'; }}
-                        onMouseLeave={e => e.currentTarget.style.background = '#FEF2F2'}
-                      >
-                        {deletingId === job.id
-                          ? <Loader size={14} color="#EF4444" style={{ animation: 'spin 1s linear infinite' }} />
-                          : <Trash2 size={14} color="#EF4444" />
-                        }
-                      </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -303,7 +300,7 @@ const AdminPage = () => {
           </div>
         )}
 
-        {/* ── APPLICATIONS TAB ──────────────────────────────────── */}
+        {/* APPLICATIONS TAB */}
         {activeTab === 'applications' && (
           <div>
             {loading ? (
@@ -324,136 +321,114 @@ const AdminPage = () => {
                     border: `1.5px solid ${expandedJob === job.id ? '#2B4EFF' : '#F3F4F6'}`,
                     overflow: 'hidden', transition: 'border-color 0.2s',
                   }}>
-
-                    {/* ── Job Header Row ── */}
-                    <div style={{
-                      padding: '20px 24px', display: 'flex', alignItems: 'center', gap: 16,
-                      cursor: 'pointer',
-                      background: expandedJob === job.id ? '#FAFBFF' : 'white',
-                    }}
+                    {/* Job Header */}
+                    <div
+                      style={{ padding: '20px 24px', cursor: 'pointer', background: expandedJob === job.id ? '#FAFBFF' : 'white' }}
                       onClick={() => setExpandedJob(expandedJob === job.id ? null : job.id)}
                     >
-                      <div className="logo-circle" style={{ background: getLogoColor(job.company), flexShrink: 0 }}>
-                        {(job.logo || job.company?.charAt(0) || 'J').toUpperCase()}
-                      </div>
-
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                          <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 15, color: '#1A1A2E' }}>{job.title}</span>
-                          {job.featured && (
-                            <span style={{ background: '#FFF3E0', color: '#D97706', padding: '2px 8px', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>Featured</span>
-                          )}
+                      <div className="admin-job-row">
+                        <div className="logo-circle" style={{ background: getLogoColor(job.company), flexShrink: 0 }}>
+                          {(job.logo || job.company?.charAt(0) || 'J').toUpperCase()}
                         </div>
-                        <div style={{ fontSize: 13, color: '#6B7280', display: 'flex', alignItems: 'center', gap: 6 }}>
-                          <span>{job.company}</span>
-                          <span>·</span>
-                          <MapPin size={11} />
-                          <span>{job.location}</span>
-                          <span>·</span>
-                          <span>{job.type}</span>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4, flexWrap: 'wrap' }}>
+                            <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 15, color: '#1A1A2E' }}>{job.title}</span>
+                            {job.featured && (
+                              <span style={{ background: '#FFF3E0', color: '#D97706', padding: '2px 8px', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>Featured</span>
+                            )}
+                          </div>
+                          <div style={{ fontSize: 13, color: '#6B7280', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+                            <span>{job.company}</span><span>·</span>
+                            <MapPin size={11} /><span>{job.location}</span><span>·</span>
+                            <span>{job.type}</span>
+                          </div>
                         </div>
-                      </div>
-
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-                        {/* Applicant count badge */}
-                        <div style={{
-                          background: '#2B4EFF', color: 'white',
-                          borderRadius: 10, padding: '4px 12px',
-                          fontSize: 13, fontWeight: 700, fontFamily: 'Syne',
-                          display: 'flex', alignItems: 'center', gap: 6,
-                        }}>
-                          <Users size={13} />
-                          {job.applicants.length} applicant{job.applicants.length !== 1 ? 's' : ''}
-                        </div>
-
-                        {/* View full detail */}
-                        <Link to={`/admin/jobs/${job.id}`} onClick={e => e.stopPropagation()}>
-                          <button style={{
-                            display: 'flex', alignItems: 'center', gap: 5,
-                            background: '#EEF1FF', border: 'none', borderRadius: 8,
-                            padding: '7px 12px', color: '#2B4EFF',
-                            fontFamily: 'DM Sans', fontWeight: 600, fontSize: 12, cursor: 'pointer',
-                          }}
-                            onMouseEnter={e => e.currentTarget.style.background = '#DDE4FF'}
-                            onMouseLeave={e => e.currentTarget.style.background = '#EEF1FF'}
+                        <div className="admin-job-actions">
+                          <div style={{
+                            background: '#2B4EFF', color: 'white', borderRadius: 10, padding: '4px 12px',
+                            fontSize: 13, fontWeight: 700, fontFamily: 'Syne',
+                            display: 'flex', alignItems: 'center', gap: 6,
+                          }}>
+                            <Users size={13} />
+                            {job.applicants.length} applicant{job.applicants.length !== 1 ? 's' : ''}
+                          </div>
+                          <Link to={`/admin/jobs/${job.id}`} onClick={e => e.stopPropagation()}>
+                            <button style={{
+                              display: 'flex', alignItems: 'center', gap: 5,
+                              background: '#EEF1FF', border: 'none', borderRadius: 8,
+                              padding: '7px 12px', color: '#2B4EFF',
+                              fontFamily: 'DM Sans', fontWeight: 600, fontSize: 12, cursor: 'pointer',
+                            }}
+                              onMouseEnter={e => e.currentTarget.style.background = '#DDE4FF'}
+                              onMouseLeave={e => e.currentTarget.style.background = '#EEF1FF'}
+                            >
+                              <Eye size={12} /> Details
+                            </button>
+                          </Link>
+                          <button onClick={(e) => { e.stopPropagation(); handleDelete(job.id); }}
+                            disabled={deletingId === job.id}
+                            style={{
+                              width: 34, height: 34, background: '#FEF2F2', border: 'none', borderRadius: 8,
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              cursor: deletingId === job.id ? 'not-allowed' : 'pointer',
+                            }}
+                            onMouseEnter={e => { if (deletingId !== job.id) e.currentTarget.style.background = '#FEE2E2'; }}
+                            onMouseLeave={e => e.currentTarget.style.background = '#FEF2F2'}
                           >
-                            <Eye size={12} /> Details
+                            {deletingId === job.id
+                              ? <Loader size={13} color="#EF4444" style={{ animation: 'spin 1s linear infinite' }} />
+                              : <Trash2 size={13} color="#EF4444" />
+                            }
                           </button>
-                        </Link>
-
-                        {/* Delete job */}
-                        <button onClick={(e) => { e.stopPropagation(); handleDelete(job.id); }}
-                          disabled={deletingId === job.id}
-                          style={{
-                            width: 34, height: 34, background: '#FEF2F2', border: 'none', borderRadius: 8,
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            cursor: deletingId === job.id ? 'not-allowed' : 'pointer', transition: 'all 0.2s',
-                          }}
-                          onMouseEnter={e => { if (deletingId !== job.id) e.currentTarget.style.background = '#FEE2E2'; }}
-                          onMouseLeave={e => e.currentTarget.style.background = '#FEF2F2'}
-                        >
-                          {deletingId === job.id
-                            ? <Loader size={13} color="#EF4444" style={{ animation: 'spin 1s linear infinite' }} />
-                            : <Trash2 size={13} color="#EF4444" />
-                          }
-                        </button>
-
-                        {/* Expand toggle */}
-                        <div style={{ color: '#9CA3AF' }}>
-                          {expandedJob === job.id ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                          <div style={{ color: '#9CA3AF' }}>
+                            {expandedJob === job.id ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* ── Applicants List (expanded) ── */}
+                    {/* Applicants expanded */}
                     {expandedJob === job.id && (
                       <div style={{ borderTop: '1px solid #EEF1FF', padding: '16px 24px', background: '#FAFBFF' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                          {job.applicants.map((app, idx) => (
+                          {job.applicants.map((app) => (
                             <div key={app.id} style={{
                               background: 'white', borderRadius: 12,
                               border: '1.5px solid #F3F4F6', padding: '16px 20px',
-                              display: 'flex', gap: 14, alignItems: 'flex-start',
                             }}>
-                              {/* Avatar */}
-                              <div style={{
-                                width: 40, height: 40, borderRadius: 10, flexShrink: 0,
-                                background: getLogoColor(app.name),
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                color: 'white', fontFamily: 'Syne', fontWeight: 700, fontSize: 16,
-                              }}>
-                                {app.name.charAt(0).toUpperCase()}
-                              </div>
-
-                              <div style={{ flex: 1, minWidth: 0 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-                                  <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 14, color: '#1A1A2E' }}>
-                                    {app.name}
-                                  </span>
-                                  <span style={{ fontSize: 11, color: '#9CA3AF' }}>{formatDate(app.created_at)}</span>
-                                </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 13, color: '#6B7280', marginBottom: 8 }}>
-                                  <Mail size={11} /> {app.email}
-                                </div>
-
-                                {/* Cover note */}
-                                <p style={{
-                                  background: '#F9FAFB', border: '1px solid #F3F4F6',
-                                  borderRadius: 8, padding: '10px 12px',
-                                  fontSize: 13, color: '#374151', lineHeight: 1.6, margin: '0 0 10px',
+                              <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+                                <div style={{
+                                  width: 40, height: 40, borderRadius: 10, flexShrink: 0,
+                                  background: getLogoColor(app.name),
+                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  color: 'white', fontFamily: 'Syne', fontWeight: 700, fontSize: 16,
                                 }}>
-                                  {app.cover_note}
-                                </p>
-
-                                {/* Resume link */}
-                                <a href={app.resume_link} target="_blank" rel="noopener noreferrer" style={{
-                                  display: 'inline-flex', alignItems: 'center', gap: 5,
-                                  background: '#EEF1FF', color: '#2B4EFF',
-                                  padding: '6px 12px', borderRadius: 8,
-                                  fontSize: 12, fontWeight: 600, textDecoration: 'none',
-                                }}>
-                                  <FileText size={12} /> View Resume <ExternalLink size={10} />
-                                </a>
+                                  {app.name.charAt(0).toUpperCase()}
+                                </div>
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4, flexWrap: 'wrap', gap: 4 }}>
+                                    <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 14, color: '#1A1A2E' }}>{app.name}</span>
+                                    <span style={{ fontSize: 11, color: '#9CA3AF' }}>{formatDate(app.created_at)}</span>
+                                  </div>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 13, color: '#6B7280', marginBottom: 8 }}>
+                                    <Mail size={11} /> {app.email}
+                                  </div>
+                                  <p style={{
+                                    background: '#F9FAFB', border: '1px solid #F3F4F6',
+                                    borderRadius: 8, padding: '10px 12px',
+                                    fontSize: 13, color: '#374151', lineHeight: 1.6, margin: '0 0 10px',
+                                  }}>
+                                    {app.cover_note}
+                                  </p>
+                                  <a href={app.resume_link} target="_blank" rel="noopener noreferrer" style={{
+                                    display: 'inline-flex', alignItems: 'center', gap: 5,
+                                    background: '#EEF1FF', color: '#2B4EFF',
+                                    padding: '6px 12px', borderRadius: 8,
+                                    fontSize: 12, fontWeight: 600, textDecoration: 'none',
+                                  }}>
+                                    <FileText size={12} /> View Resume <ExternalLink size={10} />
+                                  </a>
+                                </div>
                               </div>
                             </div>
                           ))}
@@ -470,9 +445,52 @@ const AdminPage = () => {
 
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @media (max-width: 600px) {
-          div[style*='gridTemplateColumns: 1fr 1fr'] { grid-template-columns: 1fr !important; }
-          div[style*='gridTemplateColumns: repeat(3, 1fr)'] { grid-template-columns: 1fr !important; }
+
+        .admin-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+          margin-bottom: 32px;
+        }
+
+        .admin-form-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+          margin-bottom: 16px;
+        }
+
+        .admin-job-row {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .admin-job-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+          .admin-stats-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+          }
+          .admin-form-grid {
+            grid-template-columns: 1fr;
+          }
+          .admin-job-row {
+            flex-wrap: wrap;
+          }
+          .admin-job-actions {
+            width: 100%;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            padding-top: 12px;
+            border-top: 1px solid #F3F4F6;
+          }
         }
       `}</style>
     </div>
