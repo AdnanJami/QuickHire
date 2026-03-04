@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import {  ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import SearchBar from '../components/SearchBar';
 import JobCard from '../components/JobCard';
 import { getJobs } from '../utils/api';
@@ -14,6 +14,7 @@ const JobsPage = () => {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [showFilters, setShowFilters] = useState(false);
 
   const search = searchParams.get('search') || '';
   const location = searchParams.get('location') || '';
@@ -65,6 +66,84 @@ const JobsPage = () => {
     setPage(1);
   };
 
+  const Filters = () => (
+    <>
+      {/* Category Filter */}
+      <div style={{ background: 'white', borderRadius: 16, border: '1.5px solid #F3F4F6', padding: 24, marginBottom: 20 }}>
+        <h3 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 16, color: '#1A1A2E', marginBottom: 16 }}>Category</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setFilter('category', cat)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '8px 12px',
+                borderRadius: 8,
+                border: 'none',
+                background: category === cat ? '#EEF1FF' : 'transparent',
+                color: category === cat ? '#2B4EFF' : '#374151',
+                fontFamily: 'DM Sans',
+                fontWeight: category === cat ? 600 : 400,
+                fontSize: 14,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                textAlign: 'left',
+                width: '100%',
+              }}
+            >
+              {cat}
+              {category === cat && <span style={{ fontSize: 12, color: '#2B4EFF' }}>✓</span>}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Job Type Filter */}
+      <div style={{ background: 'white', borderRadius: 16, border: '1.5px solid #F3F4F6', padding: 24 }}>
+        <h3 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 16, color: '#1A1A2E', marginBottom: 16 }}>Job Type</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {JOB_TYPES.map(t => (
+            <button
+              key={t}
+              onClick={() => setFilter('type', t)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                padding: '8px 12px',
+                borderRadius: 8,
+                border: 'none',
+                background: type === t ? '#EEF1FF' : 'transparent',
+                color: type === t ? '#2B4EFF' : '#374151',
+                fontFamily: 'DM Sans',
+                fontWeight: type === t ? 600 : 400,
+                fontSize: 14,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                textAlign: 'left',
+                width: '100%',
+              }}
+            >
+              <div style={{
+                width: 16, height: 16, borderRadius: 4,
+                border: `2px solid ${type === t ? '#2B4EFF' : '#D1D5DB'}`,
+                background: type === t ? '#2B4EFF' : 'transparent',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0,
+              }}>
+                {type === t && <span style={{ color: 'white', fontSize: 10 }}>✓</span>}
+              </div>
+              {t}
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <div style={{ paddingTop: 72 }}>
       {/* Header */}
@@ -81,191 +160,152 @@ const JobsPage = () => {
       </div>
 
       {/* Main content */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px', display: 'grid', gridTemplateColumns: '260px 1fr', gap: 32 }}>
-        {/* Sidebar Filters */}
-        <aside>
-          {/* Category Filter */}
-          <div style={{ background: 'white', borderRadius: 16, border: '1.5px solid #F3F4F6', padding: 24, marginBottom: 20 }}>
-            <h3 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 16, color: '#1A1A2E', marginBottom: 16 }}>Category</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {CATEGORIES.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setFilter('category', cat)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '8px 12px',
-                    borderRadius: 8,
-                    border: 'none',
-                    background: category === cat ? '#EEF1FF' : 'transparent',
-                    color: category === cat ? '#2B4EFF' : '#374151',
-                    fontFamily: 'DM Sans',
-                    fontWeight: category === cat ? 600 : 400,
-                    fontSize: 14,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    textAlign: 'left',
-                    width: '100%',
-                  }}
-                >
-                  {cat}
-                  {category === cat && <span style={{ fontSize: 12, color: '#2B4EFF' }}>✓</span>}
-                </button>
-              ))}
-            </div>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px' }}>
+
+        {/* Mobile Filter Toggle Button */}
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          className="mobile-filter-btn"
+          style={{
+            display: 'none',
+            width: '100%',
+            padding: '12px 16px',
+            background: showFilters ? '#1A1A2E' : '#2B4EFF',
+            color: 'white',
+            border: 'none',
+            borderRadius: 10,
+            fontFamily: 'DM Sans',
+            fontWeight: 600,
+            fontSize: 14,
+            cursor: 'pointer',
+            marginBottom: 16,
+            transition: 'background 0.2s',
+          }}
+        >
+          {showFilters ? '✕ Hide Filters' : '⚙ Show Filters'}
+        </button>
+
+        {/* Mobile Filters (shown when toggled) */}
+        {showFilters && (
+          <div className="mobile-filters">
+            <Filters />
           </div>
+        )}
 
-          {/* Job Type Filter */}
-          <div style={{ background: 'white', borderRadius: 16, border: '1.5px solid #F3F4F6', padding: 24 }}>
-            <h3 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 16, color: '#1A1A2E', marginBottom: 16 }}>Job Type</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {JOB_TYPES.map(t => (
-                <button
-                  key={t}
-                  onClick={() => setFilter('type', t)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 10,
-                    padding: '8px 12px',
-                    borderRadius: 8,
-                    border: 'none',
-                    background: type === t ? '#EEF1FF' : 'transparent',
-                    color: type === t ? '#2B4EFF' : '#374151',
-                    fontFamily: 'DM Sans',
-                    fontWeight: type === t ? 600 : 400,
-                    fontSize: 14,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    textAlign: 'left',
-                    width: '100%',
-                  }}
-                >
-                  <div style={{
-                    width: 16, height: 16, borderRadius: 4,
-                    border: `2px solid ${type === t ? '#2B4EFF' : '#D1D5DB'}`,
-                    background: type === t ? '#2B4EFF' : 'transparent',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
-                    {type === t && <span style={{ color: 'white', fontSize: 10 }}>✓</span>}
-                  </div>
-                  {t}
-                </button>
-              ))}
-            </div>
-          </div>
-        </aside>
+        <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 32 }}>
+          {/* Sidebar Filters - Desktop only */}
+          <aside className="desktop-sidebar">
+            <Filters />
+          </aside>
 
-        {/* Job Grid */}
-        <main>
-          {/* Active filters */}
-          {(search || location || category || type) && (
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 20 }}>
-              {search && (
-                <button onClick={() => { const p = Object.fromEntries(searchParams.entries()); delete p.search; setSearchParams(p); setPage(1); }} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#EEF1FF', border: 'none', borderRadius: 20, color: '#2B4EFF', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
-                  🔍 {search} ✕
+          {/* Job Grid */}
+          <main>
+            {/* Active filters */}
+            {(search || location || category || type) && (
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 20 }}>
+                {search && (
+                  <button onClick={() => { const p = Object.fromEntries(searchParams.entries()); delete p.search; setSearchParams(p); setPage(1); }} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#EEF1FF', border: 'none', borderRadius: 20, color: '#2B4EFF', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
+                    🔍 {search} ✕
+                  </button>
+                )}
+                {location && (
+                  <button onClick={() => { const p = Object.fromEntries(searchParams.entries()); delete p.location; setSearchParams(p); setPage(1); }} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#EEF1FF', border: 'none', borderRadius: 20, color: '#2B4EFF', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
+                    📍 {location} ✕
+                  </button>
+                )}
+                {category && (
+                  <button onClick={() => setFilter('category', category)} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#EEF1FF', border: 'none', borderRadius: 20, color: '#2B4EFF', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
+                    {category} ✕
+                  </button>
+                )}
+                {type && (
+                  <button onClick={() => setFilter('type', type)} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#EEF1FF', border: 'none', borderRadius: 20, color: '#2B4EFF', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
+                    {type} ✕
+                  </button>
+                )}
+                <button onClick={clearAll} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 16px', background: '#1A1A2E', border: 'none', borderRadius: 20, color: 'white', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
+                  Clear All
                 </button>
-              )}
-              {location && (
-                <button onClick={() => { const p = Object.fromEntries(searchParams.entries()); delete p.location; setSearchParams(p); setPage(1); }} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#EEF1FF', border: 'none', borderRadius: 20, color: '#2B4EFF', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
-                  📍 {location} ✕
-                </button>
-              )}
-              {category && (
-                <button onClick={() => setFilter('category', category)} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#EEF1FF', border: 'none', borderRadius: 20, color: '#2B4EFF', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
-                  {category} ✕
-                </button>
-              )}
-              {type && (
-                <button onClick={() => setFilter('type', type)} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#EEF1FF', border: 'none', borderRadius: 20, color: '#2B4EFF', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
-                  {type} ✕
-                </button>
-              )}
-              <button onClick={clearAll} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 16px', background: '#1A1A2E', border: 'none', borderRadius: 20, color: 'white', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
-                Clear All
-              </button>
-            </div>
-          )}
+              </div>
+            )}
 
-          {loading ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-              {[...Array(6)].map((_, i) => (
-                <div key={i} style={{
-                  height: 200, background: '#F3F4F6', borderRadius: 16,
-                  animation: 'pulse 1.5s ease infinite',
-                }} />
-              ))}
-            </div>
-          ) : jobs.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
-              <h3 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 20, marginBottom: 8 }}>No jobs found</h3>
-              <p style={{ color: '#6B7280' }}>Try different search terms or remove filters</p>
-            </div>
-          ) : (
-            <>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginBottom: 32 }}>
-                {jobs.map(job => (
-                  <JobCard key={job.id} job={job} />
+            {loading ? (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} style={{
+                    height: 200, background: '#F3F4F6', borderRadius: 16,
+                    animation: 'pulse 1.5s ease infinite',
+                  }} />
                 ))}
               </div>
+            ) : jobs.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+                <h3 style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 20, marginBottom: 8 }}>No jobs found</h3>
+                <p style={{ color: '#6B7280' }}>Try different search terms or remove filters</p>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginBottom: 32 }}>
+                  {jobs.map(job => (
+                    <JobCard key={job.id} job={job} />
+                  ))}
+                </div>
 
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-                  <button
-                    onClick={() => setPage(p => Math.max(1, p - 1))}
-                    disabled={page === 1}
-                    style={{
-                      width: 36, height: 36, borderRadius: 8,
-                      border: '1.5px solid #E5E7EB',
-                      background: 'white',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      cursor: page === 1 ? 'not-allowed' : 'pointer',
-                      opacity: page === 1 ? 0.4 : 1,
-                    }}
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  {[...Array(totalPages)].map((_, i) => (
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                     <button
-                      key={i}
-                      onClick={() => setPage(i + 1)}
+                      onClick={() => setPage(p => Math.max(1, p - 1))}
+                      disabled={page === 1}
                       style={{
                         width: 36, height: 36, borderRadius: 8,
-                        border: page === i + 1 ? 'none' : '1.5px solid #E5E7EB',
-                        background: page === i + 1 ? '#2B4EFF' : 'white',
-                        color: page === i + 1 ? 'white' : '#374151',
-                        fontWeight: 600,
-                        fontSize: 14,
-                        cursor: 'pointer',
-                        fontFamily: 'DM Sans',
+                        border: '1.5px solid #E5E7EB',
+                        background: 'white',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        cursor: page === 1 ? 'not-allowed' : 'pointer',
+                        opacity: page === 1 ? 0.4 : 1,
                       }}
                     >
-                      {i + 1}
+                      <ChevronLeft size={16} />
                     </button>
-                  ))}
-                  <button
-                    onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                    disabled={page === totalPages}
-                    style={{
-                      width: 36, height: 36, borderRadius: 8,
-                      border: '1.5px solid #E5E7EB',
-                      background: 'white',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      cursor: page === totalPages ? 'not-allowed' : 'pointer',
-                      opacity: page === totalPages ? 0.4 : 1,
-                    }}
-                  >
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-        </main>
+                    {[...Array(totalPages)].map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setPage(i + 1)}
+                        style={{
+                          width: 36, height: 36, borderRadius: 8,
+                          border: page === i + 1 ? 'none' : '1.5px solid #E5E7EB',
+                          background: page === i + 1 ? '#2B4EFF' : 'white',
+                          color: page === i + 1 ? 'white' : '#374151',
+                          fontWeight: 600,
+                          fontSize: 14,
+                          cursor: 'pointer',
+                          fontFamily: 'DM Sans',
+                        }}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                      disabled={page === totalPages}
+                      style={{
+                        width: 36, height: 36, borderRadius: 8,
+                        border: '1.5px solid #E5E7EB',
+                        background: 'white',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        cursor: page === totalPages ? 'not-allowed' : 'pointer',
+                        opacity: page === totalPages ? 0.4 : 1,
+                      }}
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </main>
+        </div>
       </div>
 
       <style>{`
@@ -285,7 +325,15 @@ const JobsPage = () => {
           main > div[style*='repeat(3'] {
             grid-template-columns: 1fr !important;
           }
-          aside { display: none; }
+          .desktop-sidebar {
+            display: none !important;
+          }
+          .mobile-filter-btn {
+            display: block !important;
+          }
+          .mobile-filters {
+            margin-bottom: 16px;
+          }
         }
       `}</style>
     </div>

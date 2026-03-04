@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import logo from '../static/logo.png';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -14,10 +15,9 @@ const Footer = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
               <div style={{
                 width: 32, height: 32,
-                background: 'linear-gradient(135deg, #2B4EFF, #6B8AFF)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <span style={{ color: 'white', fontFamily: 'Syne', fontWeight: 800, fontSize: 14 }}>Q</span>
+                <img src={logo} alt="QuickHire Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
               <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 18, color: 'white' }}>QuickHire</span>
             </div>
@@ -85,9 +85,6 @@ const Footer = () => {
 
         {/* Bottom */}
         <div style={{ borderTop: '1px solid #2D2D4A', paddingTop: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <p style={{ color: '#6B7280', fontSize: 13 }}>
-            2024 © QuickHire. All rights reserved.
-          </p>
           <div style={{ display: 'flex', gap: 16 }}>
             {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
               <a key={i} href="#" style={{ color: '#6B7280', transition: 'color 0.2s' }}

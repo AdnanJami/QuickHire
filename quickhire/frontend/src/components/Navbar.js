@@ -1,7 +1,7 @@
 import  { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-
+import logo from '../static/logo.png';
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -31,10 +31,9 @@ const Navbar = () => {
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
               width: 36, height: 36,
-              background: 'linear-gradient(135deg, #2B4EFF, #6B8AFF)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <span style={{ color: 'white', fontFamily: 'Syne', fontWeight: 800, fontSize: 16 }}>Q</span>
+              <img src={logo} alt="QuickHire Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 20, color: '#1A1A2E' }}>
               Quick<span style={{ color: '#2B4EFF' }}>Hire</span>
