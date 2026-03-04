@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, BarChart2,} from 'lucide-react';
+import { ArrowRight, BarChart2 } from 'lucide-react';
 import SearchBar from '../components/SearchBar';
 import JobCard from '../components/JobCard';
 import { getJobs } from '../utils/api';
 import person_image from '../static/image.png';
-import { LiaPencilRulerSolid,LiaCodeSolid } from "react-icons/lia";
-import { TbChartInfographic,TbDeviceImac } from "react-icons/tb";
+import { LiaPencilRulerSolid, LiaCodeSolid } from "react-icons/lia";
+import { TbChartInfographic, TbDeviceImac } from "react-icons/tb";
 import { GrAnnounce } from "react-icons/gr";
 import { HiCash } from "react-icons/hi";
 import { LuBriefcaseBusiness } from "react-icons/lu";
 import { FaUsers } from "react-icons/fa";
+
 const CATEGORIES = [
   { name: 'Design',          count: '235 jobs available', icon: <LiaPencilRulerSolid color="#4640DE" size={28} /> },
   { name: 'Sales',           count: '756 jobs available', icon: <TbChartInfographic  color="#4640DE" size={28} /> },
@@ -64,24 +65,16 @@ const HomePage = () => {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Decorative shapes */}
-        <div style={{
-          position: 'absolute', top: -60, right: -60,
-          width: 300, height: 300,
-          background: 'radial-gradient(circle, rgba(43,78,255,0.06) 0%, transparent 70%)',
-        }} />
-        <div style={{
-          position: 'absolute', bottom: -80, left: -80,
-          width: 400, height: 400,
-          background: 'radial-gradient(circle, rgba(43,78,255,0.04) 0%, transparent 70%)',
-        }} />
+        <div style={{ position: 'absolute', top: -60, right: -60, width: 300, height: 300, background: 'radial-gradient(circle, rgba(43,78,255,0.06) 0%, transparent 70%)' }} />
+        <div style={{ position: 'absolute', bottom: -80, left: -80, width: 400, height: 400, background: 'radial-gradient(circle, rgba(43,78,255,0.04) 0%, transparent 70%)' }} />
 
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
+          {/* ✅ CSS class instead of inline grid */}
+          <div className="hero-grid">
             <div className="animate-fade-in-up">
               <h1 style={{
                 fontFamily: 'Syne',
-                fontSize: 'clamp(36px, 5vw, 58px)',
+                fontSize: 'clamp(32px, 5vw, 58px)',
                 fontWeight: 800,
                 lineHeight: 1.1,
                 color: '#1A1A2E',
@@ -98,32 +91,26 @@ const HomePage = () => {
               <p style={{ fontSize: 16, color: '#6B7280', lineHeight: 1.7, marginBottom: 36, maxWidth: 440 }}>
                 Great platform for the job seeker that's searching for new career heights and passionate about startups.
               </p>
-
               <div style={{ marginBottom: 20 }}>
                 <SearchBar onSearch={handleSearch} />
               </div>
-
               <p style={{ fontSize: 13, color: '#9CA3AF' }}>
                 <span style={{ fontWeight: 600 }}>Popular:</span>{' '}
                 {['UI Designer', 'UX Researcher', 'Android', 'Admin'].map((t, i) => (
                   <span key={t}>
-                    <Link
-                      to={`/jobs?search=${t}`}
+                    <Link to={`/jobs?search=${t}`}
                       style={{ color: '#6B7280', textDecoration: 'underline', textDecorationColor: 'transparent', transition: 'all 0.2s' }}
                       onMouseEnter={e => { e.target.style.color = '#2B4EFF'; e.target.style.textDecorationColor = '#2B4EFF'; }}
                       onMouseLeave={e => { e.target.style.color = '#6B7280'; e.target.style.textDecorationColor = 'transparent'; }}
-                    >
-                      {t}
-                    </Link>
+                    >{t}</Link>
                     {i < 3 ? ', ' : ''}
                   </span>
                 ))}
               </p>
             </div>
 
-            {/* Hero image area */}
             <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }} className="hero-img-col">
-              <img src={person_image} alt="person" />
+              <img src={person_image} alt="person" style={{ maxWidth: '100%' }} />
             </div>
           </div>
         </div>
@@ -132,20 +119,13 @@ const HomePage = () => {
       {/* Companies */}
       <section style={{ padding: '20px 0', borderBottom: '1px solid #F3F4F6' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
-          <p style={{ textAlign: 'center', color: '#9CA3AF', fontSize: 13, marginBottom: 28, fontWeight: 500 }}>
+          <p style={{ textAlign: 'center', color: '#9CA3AF', fontSize: 13, marginBottom: 20, fontWeight: 500 }}>
             Companies we helped grow
           </p>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 48, flexWrap: 'wrap' }}>
+          {/* ✅ CSS class - font size controlled by media query */}
+          <div className="companies-list">
             {COMPANIES.map(c => (
-              <span key={c} style={{
-                fontFamily: 'Syne',
-                fontWeight: 700,
-                fontSize: 40,
-                color: '#C4C4C4',
-                letterSpacing: c === 'TESLA' ? 3 : 0,
-                transition: 'color 0.2s',
-                cursor: 'default',
-              }}
+              <span key={c} className="company-name"
                 onMouseEnter={e => e.target.style.color = '#1A1A2E'}
                 onMouseLeave={e => e.target.style.color = '#C4C4C4'}
               >
@@ -160,60 +140,39 @@ const HomePage = () => {
       <section style={{ padding: '80px 0' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
-            <h2 className="section-title">
-              Explore by <span>category</span>
-            </h2>
+            <h2 className="section-title">Explore by <span>category</span></h2>
             <Link to="/jobs" style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#2B4EFF', fontWeight: 600, fontSize: 14 }}>
               Show all jobs <ArrowRight size={16} />
             </Link>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
+          {/* ✅ CSS class instead of inline grid */}
+          <div className="categories-grid">
             {CATEGORIES.map((cat) => (
-              <Link
-                key={cat.name}
-                to={`/jobs?category=${cat.name}`}
-                style={{ textDecoration: 'none' }}
-              >
+              <Link key={cat.name} to={`/jobs?category=${cat.name}`} style={{ textDecoration: 'none' }}>
                 <div style={{
-                  background: cat.active ? '#2B4EFF' : '#ffffff11',
+                  background: 'white',
                   padding: '24px 20px',
                   cursor: 'pointer',
                   transition: 'all 0.25s ease',
-                  border: '1.5px solid transparent',
+                  border: '1.5px solid #F3F4F6',
                 }}
                   onMouseEnter={e => {
-                    if (!cat.active) {
-                      e.currentTarget.style.borderColor = '#2B4EFF';
-                      e.currentTarget.style.transform = 'translateY(-3px)';
-                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(43,78,255,0.12)';
-                    }
+                    e.currentTarget.style.borderColor = '#2B4EFF';
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(43,78,255,0.12)';
                   }}
                   onMouseLeave={e => {
-                    if (!cat.active) {
-                      e.currentTarget.style.borderColor = 'transparent';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }
+                    e.currentTarget.style.borderColor = '#F3F4F6';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   <div style={{ fontSize: 28, marginBottom: 14 }}>{cat.icon}</div>
-                  <div style={{
-                    fontFamily: 'Syne',
-                    fontWeight: 700,
-                    fontSize: 16,
-                    color: cat.active ? 'white' : '#1A1A2E',
-                    marginBottom: 6,
-                  }}>
+                  <div style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 16, color: '#1A1A2E', marginBottom: 6 }}>
                     {cat.name}
                   </div>
-                  <div style={{
-                    fontSize: 13,
-                    color: cat.active ? 'rgba(255,255,255,0.8)' : '#6B7280',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                  }}>
+                  <div style={{ fontSize: 13, color: '#6B7280', display: 'flex', alignItems: 'center', gap: 6 }}>
                     {cat.count} <ArrowRight size={14} />
                   </div>
                 </div>
@@ -226,22 +185,10 @@ const HomePage = () => {
       {/* CTA Banner */}
       <section style={{ padding: '0 0 80px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
-          <div style={{
-            background: '#4640DE',
-            padding: '60px',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 40,
-            alignItems: 'center',
-            position: 'relative',
-            overflow: 'hidden',
-          }}>
-            <div style={{
-              position: 'absolute', right: -40, top: -40,
-              width: 300, height: 300,
-              background: 'rgba(255,255,255,0.06)',
-            }} />
-            <div>
+          {/* ✅ CSS class instead of inline grid */}
+          <div className="cta-grid">
+            <div style={{ position: 'absolute', right: -40, top: -40, width: 300, height: 300, background: 'rgba(255,255,255,0.06)' }} />
+            <div style={{ position: 'relative', zIndex: 1 }}>
               <h2 style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 32, color: 'white', marginBottom: 12 }}>
                 Start posting jobs today
               </h2>
@@ -250,15 +197,9 @@ const HomePage = () => {
               </p>
               <Link to="/admin">
                 <button style={{
-                  background: 'white',
-                  color: '#2B4EFF',
-                  border: 'none',
-                  padding: '12px 28px',
-                  fontFamily: 'DM Sans',
-                  fontWeight: 700,
-                  fontSize: 15,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
+                  background: 'white', color: '#2B4EFF', border: 'none',
+                  padding: '12px 28px', fontFamily: 'DM Sans', fontWeight: 700,
+                  fontSize: 15, cursor: 'pointer', transition: 'all 0.2s',
                 }}
                   onMouseEnter={e => { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)'; }}
                   onMouseLeave={e => { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = 'none'; }}
@@ -267,23 +208,15 @@ const HomePage = () => {
                 </button>
               </Link>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', zIndex: 1 }}>
               <div style={{
-                background: 'rgba(255,255,255,0.12)',
-                padding: 24,
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                width: '100%',
-                maxWidth: 300,
+                background: 'rgba(255,255,255,0.12)', padding: 24,
+                backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)',
+                width: '100%', maxWidth: 300,
               }}>
                 <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
                   {['76', '24', '12', '67'].map((n, i) => (
-                    <div key={i} style={{
-                      background: 'rgba(255,255,255,0.15)',
-                      padding: '8px 8px',
-                      flex: 1,
-                      textAlign: 'center',
-                    }}>
+                    <div key={i} style={{ background: 'rgba(255,255,255,0.15)', padding: '8px', flex: 1, textAlign: 'center' }}>
                       <div style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 20, color: 'white' }}>{n}</div>
                     </div>
                   ))}
@@ -316,20 +249,13 @@ const HomePage = () => {
               Show all jobs <ArrowRight size={16} />
             </Link>
           </div>
-
-          {loading ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
-              {[...Array(4)].map((_, i) => (
-                <div key={i} style={{ height: 180, background: '#F3F4F6', animation: 'pulse 1.5s infinite' }} />
-              ))}
-            </div>
-          ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
-              {featuredJobs.slice(0, 8).map(job => (
-                <JobCard key={job._id} job={job} />
-              ))}
-            </div>
-          )}
+          {/* ✅ CSS class instead of inline grid */}
+          <div className="featured-grid">
+            {loading
+              ? [...Array(4)].map((_, i) => <div key={i} style={{ height: 180, background: '#F3F4F6', animation: 'pulse 1.5s infinite' }} />)
+              : featuredJobs.slice(0, 8).map(job => <JobCard key={job._id} job={job} />)
+            }
+          </div>
         </div>
       </section>
 
@@ -342,40 +268,15 @@ const HomePage = () => {
               Show all jobs <ArrowRight size={16} />
             </Link>
           </div>
-
-          {loading ? (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-              {[...Array(4)].map((_, i) => (
-                <div key={i} style={{ height: 140, background: '#F3F4F6'}} />
-              ))}
-            </div>
-          ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-              {latestJobs.slice(0, 8).map(job => (
-                <JobCard key={job._id} job={job} />
-              ))}
-            </div>
-          )}
+          {/* ✅ CSS class instead of inline grid */}
+          <div className="latest-grid">
+            {loading
+              ? [...Array(4)].map((_, i) => <div key={i} style={{ height: 140, background: '#F3F4F6' }} />)
+              : latestJobs.slice(0, 8).map(job => <JobCard key={job._id} job={job} />)
+            }
+          </div>
         </div>
       </section>
-
-      <style>{`
-        @media (max-width: 1024px) {
-          .hero-img-col { display: none !important; }
-        }
-        @media (max-width: 768px) {
-          section > div > div[style*='grid-template-columns: repeat(4'] {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-          section > div > div[style*='grid-template-columns: 1fr 1fr'] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
-        }
-      `}</style>
     </div>
   );
 };

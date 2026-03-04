@@ -20,13 +20,19 @@
   --font-heading: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
 }
+html {
+  overflow-x: hidden;
+}
 
 body {
   font-family: var(--font-body);
   color: var(--gray-900);
   background-color: var(--white);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100%;  
 }
+
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
@@ -199,4 +205,100 @@ input, select, textarea {
   font-family: var(--font-heading);
   color: white;
   flex-shrink: 0;
+}
+/* Responsive grids */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  padding-bottom: 60px;
+}
+
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: #4640DE;
+  padding: 60px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.latest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.companies-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 20px;
+}
+
+.company-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #C4C4C4;
+  cursor: default;
+  transition: color 0.2s;
+}
+
+@media (max-width: 1024px) {
+  .hero-img-col {
+    display: none !important;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .cta-grid {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+  }
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .latest-grid {
+    grid-template-columns: 1fr;
+  }
+  .companies-list {
+    gap: 16px;
+  }
+  .company-name {
+    font-size: 20px;
+  }
+  .section-title {
+    font-size: 24px;
+  }
 }
